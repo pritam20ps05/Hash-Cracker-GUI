@@ -1,0 +1,43 @@
+# Byte-compiled / optimized / compiled Python files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environment
+venv/
+.env/
+env/
+
+# macOS files
+.DS_Store
+
+# Logs and debugging
+*.log
+*.bak
+
+# IDE and editor files
+.vscode/
+.idea/
+*.swp
+
+# System-specific files
+Thumbs.db
+desktop.ini
+
+# Python egg files
+*.egg
+*.egg-info/
+dist/
+build/
+
+# Wordlist and hash files
+*.txt
+*.dict
+
+# Generated files
+*.log
+*.tmp
+
+# PyInstaller
+*.spec
+output/
