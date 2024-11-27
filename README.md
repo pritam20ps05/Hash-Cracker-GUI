@@ -1,6 +1,8 @@
 # Hash-Cracker-GUI
 HashCracker GUI is a lightweight, user-friendly application designed to efficiently crack password hashes using dictionary-based attacks. Built with Python and powered by CustomTkinter, the tool provides a modern graphical interface that simplifies hash-cracking tasks for ethical hacking, penetration testing, and educational purposes.
-#Features
+
+
+##Features
 - Supports multiple hash algorithms (e.g., MD5, SHA1, SHA256, etc.).
 - Drag-and-drop functionality for hash and wordlist files.
 - Real-time process count and output updates.
@@ -41,11 +43,9 @@ To use HashCracker:
 
 
 ##ScreenShot
-## Screenshot## Screenshot
-![Hash-Cracker-GUI Screenshot](https://github.com/ayushbrmn08/hashcracker/assets/8ac35271-9383-40b8-b656-c3ed20018a87)
+![Hash_Cracker_GUI](https://github.com/user-attachments/assets/bf2fcedd-be3b-41ac-af36-14c30abe8d72)
 
 
-##Troubleshooting and FAQ
 ## Troubleshooting
 **Q: The application is not starting.**
 - Ensure that all dependencies are installed by running `pip install -r requirements.txt`.
