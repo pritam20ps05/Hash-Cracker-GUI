@@ -1,0 +1,11 @@
+# CustomTkinter for modern GUI
+customtkinter>=5.0.0
+
+# Drag-and-Drop support for GUI
+tkinterdnd2>=0.3.0
+
+# ASCII art generation for the application banner
+pyfiglet>=0.8.post1
+
+# Concurrent execution for multiprocessing
+futures; python_version<"3.9"  # Included only for older Python versions
