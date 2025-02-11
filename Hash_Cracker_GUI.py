@@ -1,15 +1,24 @@
-import hashlib
-import customtkinter as ctk
-from tkinter import filedialog
-from tkinterdnd2 import TkinterDnD, DND_FILES
-from itertools import islice
-import concurrent.futures
-import pyfiglet
 import time
+import hashlib
+import pyfiglet
 import threading
+import concurrent.futures
+import customtkinter as ctk
+from itertools import islice
+from tkinter import filedialog
+from multiprocessing import freeze_support
+from tkinterdnd2 import TkinterDnD, DND_FILES
 
-
-import math
+def check_hash_match(target, wordlist, hash_algorithm):
+    """Checks if any word in the list matches the target hash."""
+    def hash_word(word):
+        return hashlib.new(hash_algorithm, word.encode()).hexdigest()
+    
+    for word in wordlist:
+        for variant in (word, word.upper(), word.lower(), word.capitalize()):
+            if hash_word(variant) == target:
+                return variant
+    return None
 
 class HashCracker:
     def __init__(self, hash_algorithm, target, wordlistfile, wordchunks=10000):
@@ -39,17 +48,10 @@ class HashCracker:
     #         total_words = sum(1 for _ in f)
     #     self.total_processes = math.ceil(total_words / self.wordchunks)
 
-    def hash_word(self, word):
-        """Hashes a word using the specified algorithm."""
-        return hashlib.new(self.hash_algorithm, word.encode()).hexdigest()
+    # def hash_word(self, word):
+    #     """Hashes a word using the specified algorithm."""
+    #     return hashlib.new(self.hash_algorithm, word.encode()).hexdigest()
 
-    def check_hash_match(self, target, wordlist):
-        """Checks if any word in the list matches the target hash."""
-        for word in wordlist:
-            for variant in (word, word.upper(), word.lower(), word.capitalize()):
-                if self.hash_word(variant) == target:
-                    return variant
-        return None
 
     def start_attack(self, target, process_callback):
         """Starts the cracking process for a single target hash."""
@@ -68,7 +70,7 @@ class HashCracker:
                     # Submit process
                     self.total_processes += 1
                     process_callback(self.total_processes)
-                    results.append(executor.submit(self.check_hash_match, target, wordlist))
+                    results.append(executor.submit(check_hash_match, target, wordlist, self.hash_algorithm))
 
                 for future in concurrent.futures.as_completed(results):
                     self.total_processes -= 1
@@ -327,5 +329,6 @@ class HashCrackerApp(TkinterDnD.Tk):
 
 
 if __name__ == "__main__":
+    freeze_support()
     app = HashCrackerApp()
     app.mainloop()

@@ -26,9 +26,21 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt pyinstaller
 
-      - name: Build executable
+      - name: Generate Release Description
+        id: release_notes
         run: |
-          pyinstaller --onefile --windowed Hash_Cracker_GUI.py
+          echo "## Release Notes" > release_description.md
+          echo "" >> release_description.md
+          echo "### Changes in this release:" >> release_description.md
+          echo "" >> release_description.md
+          git log -1 --pretty=format:"- %s" >> release_description.md
+          echo "" >> release_description.md
+          echo "### Changelog (if provided):" >> release_description.md
+          echo "" >> release_description.md
+          echo "${{ github.event.release.body }}" >> release_description.md
+
+      - name: Build executable
+        run: pyinstaller --onefile --windowed --additional-hooks-dir=. --collect-all pyfiglet Hash_Cracker_GUI.py
 
       - name: Rename and move executable
         shell: bash
@@ -44,5 +56,6 @@ jobs:
         uses: softprops/action-gh-release@v2
         with:
           files: dist_release/*
+          body_path: release_description.md
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
